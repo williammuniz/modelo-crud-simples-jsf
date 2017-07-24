@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+   <!-- Begin Example RewriteRules 
+   
+      // These are custom rewrite-rules, and are probably not necessary for your application.
+
+      <rewrite match="^/old-url/(\w+)/$" substitute="/new_url/$1/" redirect="301" />
+
+    -->
+   
+    <url-mapping>
+        <pattern value="/interno/home/" />
+        <view-id value="/faces/interno/index.xhtml" />
+    </url-mapping>
+    <url-mapping>
+        <pattern value="/login/" />
+        <view-id value="/faces/login.xhtml" />
+    </url-mapping>
+    <url-mapping>
+        <pattern value="/recuperarsenha/" /> 
+        <view-id value="/faces/recuperasenha.xhtml" />
+    </url-mapping>
+    <url-mapping>
+        <pattern value="/alterarsenha/" /> 
+        <view-id value="/faces/alterasenha.xhtml" />
+    </url-mapping>
+    <url-mapping>
+        <pattern value="/login-error/" />
+        <view-id value="/faces/login-error.xhtml" />
+    </url-mapping>
+
+    <rewrite processor="br.com.exemplo.seguranca.ModificadorURL"/>
+</pretty-config>

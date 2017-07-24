@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <listener> 
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>  
+    </listener>
+    <!-- SpringSecurity -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath*:META-INF/spring/applicationContext*.xml</param-value>
+    </context-param>
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+        <!--        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>-->
+    </filter-mapping>
+    <!-- PRETTY FACES -->
+    <context-param>
+        <param-name>com.ocpsoft.pretty.DEVELOPMENT</param-name>
+        <param-value>true</param-value>
+    </context-param>    
+    <context-param>
+        <param-name>com.ocpsoft.pretty.BASE_PACKAGES</param-name>
+        <param-value>br.com.exemplo</param-value>
+    </context-param>
+    <!-- PRIMEFACES -->
+    <context-param>
+        <param-name>primefaces.THEME</param-name>
+        <param-value>bootstrap</param-value>
+    </context-param>
+    <!-- JSF -->
+    <context-param>
+        <param-name>com.sun.faces.enableMissingResourceLibraryDetection</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>javax.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>/faces/*</url-pattern>
+    </servlet-mapping>
+    <!-- File Upload Primefaces -->
+    <filter>
+        <filter-name>Upload</filter-name>
+        <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Upload</filter-name>
+        <servlet-name>Faces Servlet</servlet-name>
+    </filter-mapping>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+    <welcome-file-list>
+        <welcome-file>faces/externo/index.xhtml</welcome-file>
+    </welcome-file-list>
+    <persistence-unit-ref>
+        <persistence-unit-ref-name>modeloJNDI</persistence-unit-ref-name>
+        <persistence-unit-name>modeloPU</persistence-unit-name>
+    </persistence-unit-ref> 
+    <persistence-context-ref>
+        <persistence-context-ref-name>
+            br.com.exemplo.seguranca.service.AbstractCadastroService/entityManager
+        </persistence-context-ref-name>
+        <persistence-unit-name>modeloJNDI</persistence-unit-name>
+    </persistence-context-ref>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/faces/admin/usuario/sempermissao.xhtml</location>
+    </error-page>     
+</web-app>

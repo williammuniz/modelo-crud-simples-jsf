@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:view contentType="text/html; charset=UTF-8">        
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>ADJJ-PR</title>
+            <h:outputStylesheet library="css" name="style.css"  />
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+
+                    var usuario = 'Usuário';
+                    var email = 'Email';
+                    $("#j_password").hide();
+                    $("#mock_password").show();
+
+                    //init, set watermark text and class
+                    $('#j_username').val(usuario).addClass('watermark');
+                    $('#mock_password').val(email).addClass('watermark');
+
+                    //if blur and no value inside, set watermark text and class again.
+//                    $('#j_username').blur(function() {
+//                        if ($(this).val().length == 0) {
+//                            $(this).val(usuario).addClass('watermark');
+//                            $(".user-icon").css("left", "0px");
+//
+//                        }
+//                    });
+                    //if focus and text is watermrk, set it to empty and remove the watermark class
+                    $('#j_username').focus(function() {
+                        if ($(this).val() == usuario) {
+                            $(this).val('').removeClass('watermark');
+//                            $(".user-icon").css("left", "-48px");
+                        }
+                    });
+                    $('#mock_password').focus(function() {
+                        if ($(this).val() == email) {
+                            $(this).val('').removeClass('watermark');
+//                            $(".user-icon").css("left", "-48px");
+                        }
+                    });
+
+//                    $("#mock_password").focus(function() {
+//                        $(this).hide();
+//                        $("#j_password").show();
+//                        $("#j_password").focus();
+//                        $(".pass-icon").css("left", "-48px");
+//                    });
+//
+//                    $("#j_password").blur(function() {
+//                        if ($(this).val().length == 0)
+//                        {
+//                            $(this).hide();
+//                            $("#mock_password").show();
+//                            $(".pass-icon").css("left", "0px");
+//                        }
+//                    });
+                });
+
+            </script>
+        </h:head>        
+        <h:body>
+            <div class="heading">
+
+            </div>
+
+            <div id="wrapper">
+
+                <h:form id="login" prependId="false"  styleClass="login-form" >
+                    <h6>  <p:messages  showDetail="true" id="msgs" /> </h6>
+                    <div class="content">
+                        <h1>Recuperar Senha</h1>   
+                        <h:inputText id="j_username" title="Nome do Usuário" value="#{usuarioControlador.nomeUsuario}" styleClass="input username oitenta" style="margin-top: 25px"  />                     
+                        <h:inputText id="mock_password" title="email para a recuperação" value="#{usuarioControlador.emailUsuario}" styleClass="input password oitenta" style="margin-top: 25px" />
+                    </div>      
+                    <div class="footer2">
+                        <p:commandButton styleClass="button oitenta mtop25" update="msgs" value="Recuperar" actionListener="#{usuarioControlador.recuperarSenha()}" />
+                        <br/>
+                        <br/>
+
+                    </div>
+                </h:form>
+            </div>
+
+            <div class="footer">
+                <br/>
+                <center>
+                    ADJJ-PR
+                    <br/>
+                    <span style="font-size: 9px">
+                        Copyright © 2013 TechCode. Todos os direitos reservados.
+                    </span>
+                </center>
+            </div>
+
+        </h:body>
+    </f:view>
+</html> 

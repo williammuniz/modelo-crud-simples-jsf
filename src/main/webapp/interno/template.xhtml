@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:an="http://java.sun.com/jsf/composite/components"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html">
+    <h:head>
+        <title>ADJJ-PR</title>
+        <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+        <h:outputStylesheet library="css" name="layout.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.css"/>
+        <h:outputScript library="js" name="locales-calendar-primefaces.js"/>
+        <h:outputScript library="js" name="function-eprocon.js"/>
+        <h:outputScript library="js" name="function-jquery.js"/>
+        <h:outputScript library="js" name="bootstrap.js"/>
+    </h:head>
+    <h:body>
+        <div id="spinner"></div>
+        <div>
+            <div id="cabecalho">
+                <an:cabecalho/>
+
+                <div>
+                    <div id="topo-logo">
+                        <p:graphicImage value="/resources/images/general/macbook.png"/>
+                    </div>
+                    <div id="topo-sistema">
+                        <h:panelGrid columns="1" style="margin-left: 10px  ">
+                            <span class="font50pxBranco"><span class="verdeLimao negrito">e</span>Projeto</span><br/>
+                            <span class="branco">Gerenciamento de Coisa Nenhuma</span><br/>
+                            <span class="branco">NomeDa<span class="verdeLimao negrito">Empresa</span><span
+                                    style="font-size: 10px;">©</span></span><br/>
+                        </h:panelGrid>
+                    </div>
+                </div>
+            </div>
+            <div id="conteudo">
+                <ui:insert name="body"/>
+            </div>
+            <p:dialog widgetVar="mensagensDialog"
+                      id="idMesagensDialog"
+                      modal="true"
+                      showHeader="false"
+                      dynamic="true"
+                      position="center"
+                      style="position:fixed !important;"
+                      closable="false"
+                      resizable="false"
+                      visible="#{sistemaControlador.mensagens.size() > 0}"
+                      draggable="false">
+                <p:ajax event="close" update="@this" listener="#{sistemaControlador.limparTodasMensagens()}"
+                        immediate="true"/>
+                <h:form id="formulario-tabela-mensagens">
+                    <div class="div-info-tabela"
+                         style="overflow-y: auto; overflow-x: hidden; max-height: 400px !important;">
+                        <p:hotkey bind="esc" update="@this"
+                                  actionListener="#{sistemaControlador.limparTodasMensagens()}" immediate="true"/>
+                        <p:messages/>
+                        <table>
+                            <ui:repeat value="#{sistemaControlador.mensagens}"
+                                       var="fMess">
+                                <tr>
+                                    <td>
+                                        <div class="alert alert-#{sistemaControlador.recuperarClasseGravidadeMensagem(fMess.mensagem)}">
+                                            <h:outputText value="#{fMess.mensagem.summary}"
+                                                          escape="false"
+                                                          rendered="#{fMess.mensagem.detail ne fMess.mensagem.summary}"
+                                                          class="negrito"/>
+                                            <h:outputText value=" - "
+                                                          escape="false"
+                                                          rendered="#{fMess.mensagem.detail ne fMess.mensagem.summary}"/>
+                                            <h:outputText value="#{fMess.mensagem.detail}"
+                                                          escape="false"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ui:repeat>
+                        </table>
+                    </div>
+                    <div style="text-align: center">
+                        <p:commandButton value="Ok"
+                                         icon="ui-icon-check"
+                                         onstart="aguarde.show()"
+                                         oncomplete="aguarde.hide()"
+                                         actionListener="#{sistemaControlador.limparTodasMensagens()}"
+                                         update=":idMesagensDialog" immediate="true"/>
+                    </div>
+                </h:form>
+            </p:dialog>
+        </div>
+        <script src="#{facesContext.externalContext.requestContextPath}/resources/js/bootstrap.js"></script>
+    </h:body>
+</f:view>
+</html>

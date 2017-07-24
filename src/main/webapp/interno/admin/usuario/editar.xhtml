@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:fc="http://java.sun.com/jsf/composite/components"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">    
+    <ui:composition template="/interno/template.xhtml">
+        <ui:define name="body">
+            <h:form id="Formulario">                
+                <p:panel>
+                    <f:facet name="header">
+                        <h:outputText value="Novo Usuário" rendered="#{usuarioControlador.operacao eq 'NOVO'}" />
+                        <h:outputText value="Editar Usuário #{usuarioControlador.selecionado}" rendered="#{usuarioControlador.operacao eq 'EDITAR'}" />
+                    </f:facet>
+                    <h:panelGrid columns="2" id="grid">
+
+                        <fc:labelObrigatorio para="login" value="Login:"/>
+                        <p:inputText id="login"
+                                     value="#{usuarioControlador.selecionado.login}"                                     
+                                     title="Digite o nome do usuario."/>
+                        <fc:labelObrigatorio para="tipo" value="Tipo:"/>
+                        <p:selectOneMenu value="#{usuarioControlador.selecionado.tipo}">
+                            <f:selectItems value="#{usuarioControlador.tiposUsuario}"/>
+                        </p:selectOneMenu>
+                        <fc:labelObrigatorio rendered="#{usuarioControlador.operacao eq 'NOVO'}" para="senha" value="Senha:"/>
+                        <p:password id="senha" rendered="#{usuarioControlador.operacao eq 'NOVO'}"
+                                    value="#{usuarioControlador.selecionado.senha}"                                     
+                                    title="Digite uma senha para o usuário."/>
+                        <fc:labelObrigatorio rendered="#{usuarioControlador.operacao eq 'NOVO'}" para="repeteSenha" value="Repita a Senha:"/>
+                        <p:password id="repeteSenha" rendered="#{usuarioControlador.operacao eq 'NOVO'}"
+                                    value="#{usuarioControlador.selecionado.repeteSenha}"                                     
+                                    title="Repita a senha para o usuário."/>
+                    </h:panelGrid>
+
+                </p:panel>
+
+                <fc:rodapePadrao controlador="#{usuarioControlador}" id="rodapePadrao"/>
+            </h:form>    
+        </ui:define>
+    </ui:composition>
+</html>
+

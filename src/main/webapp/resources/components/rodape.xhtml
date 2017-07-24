@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:an="http://java.sun.com/jsf/composite/components"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div align="center" style="width: 98%;  float: left;">
+            <div class="ui-message-#{sistemaControlador.recuperarClasseGravidadeMensagem(sistemaControlador.primeiraMensagem.mensagem)}" align="center" >
+                <h:panelGrid columns="5">
+                    <div class="ui-message-#{sistemaControlador.recuperarClasseGravidadeMensagem(sistemaControlador.primeiraMensagem.mensagem)}-icon" />
+
+                    <h:outputText value="#{sistemaControlador.primeiraMensagem.ocorridoEm}" class="negrito">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="America/Sao_Paulo"/>
+                    </h:outputText>
+                    
+                    <h:outputText rendered="#{sistemaControlador.primeiraMensagem ne null}"
+                                  value=" - "
+                                  style="margin-left: 5px; margin-right: 5px;"/>
+
+                    <h:outputText value="#{sistemaControlador.primeiraMensagem.mensagem.summary}"
+                                  rendered="#{sistemaControlador.primeiraMensagem.mensagem.detail ne sistemaControlador.primeiraMensagem.mensagem.summary}"
+                                  class="negrito" escape="false"/>
+                    <h:panelGroup>
+                        <h:outputText value="#{sistemaControlador.primeiraMensagem.mensagem.detail}"
+                                      escape="false" />
+
+                        <h:outputText value=""
+                                      escape="false"
+                                      rendered="#{sistemaControlador.primeiraMensagem.mensagem.detail eq sistemaControlador.primeiraMensagem.mensagem.summary}"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+            </div>
+        </div>
+            
+        <div style="float: right; margin-top: 5px; margin-right: 10px" >
+            <an:ajaxLoader16 />
+        </div>
+
+    </cc:implementation>
+</html>

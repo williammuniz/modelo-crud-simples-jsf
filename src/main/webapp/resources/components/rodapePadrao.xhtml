@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="id" required="true"/>
+        <cc:attribute name="controlador" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form id="FormularioTabela">
+       
+                <p:commandButton value="Salvar"
+                                 onstart="aguarde.show()"
+                                 oncomplete="aguarde.hide()"
+                                 icon="ui-icon-tick"
+                                 styleClass="mtop10 mrig05 botaoAzul"
+                                 actionListener="#{cc.attrs.controlador.salvar()}"
+                                 update=":Formulario" />
+                <p:commandButton value="Cancelar"
+                                 onstart="aguarde.show()"
+                                 oncomplete="aguarde.hide()"
+                                 icon="ui-icon-cross"
+                                 styleClass="mtop10 mrig05"                                 
+                                 actionListener="#{cc.attrs.controlador.navegarEmbora()}"/>
+            <p:commandButton value="Listar #{cc.attrs.controlador.nomeEntidade}"
+                                 onstart="aguarde.show()"
+                                 oncomplete="aguarde.hide()"
+                                 icon="ui-icon-arrow-180"
+                                 styleClass="mtop10 mrig05"
+                                 actionListener="#{cc.attrs.controlador.vaiParaLista()}"/>
+
+        </h:form>
+    </cc:implementation>
+</html>

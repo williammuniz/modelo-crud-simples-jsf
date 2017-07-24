@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:fc="http://java.sun.com/jsf/composite/components"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <f:view contentType="text/html; charset=UTF-8">        
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <title>ADJJ-PR</title>
+            <h:outputStylesheet library="css" name="style.css"  />
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
+        </h:head>        
+        <h:body>
+
+            <div id="wrapper1">
+
+                <h:form id="form"   >
+                    <!--<div>-->
+                    <h6><p:messages showDetail="true" id="msgs" /></h6>
+                    <br/>
+                    <h:panelGrid columns="2" >
+                        <h:outputText style="font-size: small" value="Nova senha:"/>
+                        <p:password id="senha" 
+                                    value="#{usuarioControlador.senha}"                                     
+                                    title="Digite uma nova senha para o usuário."/>
+                        <h:outputText style="font-size: small"  value="Repita a Senha:"/>
+                        <p:password id="repeteSenha" 
+                                    value="#{usuarioControlador.repeteSenha}"                                     
+                                    title="Repita a nova senha para o usuário."/>
+                    </h:panelGrid>
+                    <p:commandButton 
+                        actionListener="#{usuarioControlador.alteraSenha()}"
+                        value="Salvar"
+                        styleClass="button oitenta mtop25"
+                        ajax="false"
+                        update="msgs"
+                        title="Clique para voltar para a tela inicial." />
+                </h:form>
+            </div>
+
+            <div class="footer">
+                <br/>
+                <center>
+                    ADJJ-PR
+                    <br/>
+                    <span style="font-size: 9px">
+                        Copyright © 2013 TechCode. Todos os direitos reservados.
+                    </span>
+                </center>
+            </div>
+
+        </h:body>
+    </f:view>
+</html>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <ui:composition template="/interno/template.xhtml">
+        <ui:define name="body">
+            <p:panel header="Usuário #{usuarioControlador.selecionado}">
+                <h:panelGrid columns="2"
+                             columnClasses="none, negrito"
+                             rowClasses="linha1Visualizar, linha2Visualizar">
+                    <c:forEach items="#{usuarioControlador.camposDoSelecionado}" var="campo">
+                        <h:outputText value="#{usuarioControlador.obterLabelCampo(campo)}" />
+                        <h:outputText value="#{usuarioControlador.obterConteudoCampo(campo)}" escape="false"/>
+                    </c:forEach>
+                </h:panelGrid>
+            </p:panel>
+
+            <h:form id="Formulario">
+                <p:button value="Listar Usuários"
+                          icon="ui-icon-arrow-180"
+                          title="Clique para ir a lista de Usuários."
+                          styleClass="mtop10"
+                          href='/admin/usuario/listar/'/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

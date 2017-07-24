@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:fc="http://java.sun.com/jsf/composite/components"
+      xmlns:f="http://java.sun.com/jsf/core">    
+    <ui:composition template="/interno/template.xhtml">
+        <ui:define name="body">
+            <h:form id="Formulario">                
+                <p:panel>
+                    <f:facet name="header">
+                        <h:outputText value="Nova Estado" rendered="#{estadoControlador.operacao eq 'NOVO'}" />
+                        <h:outputText value="Editar Estado #{estadoControlador.selecionado}" rendered="#{estadoControlador.operacao eq 'EDITAR'}" />
+                    </f:facet>
+                    <h:panelGrid columns="2">
+
+                        <fc:labelObrigatorio para="nome" value="Nome:"/>
+                        <p:inputText id="nome"
+                                     value="#{estadoControlador.selecionado.nome}"                                     
+                                     title="Digite o nome do estado."/>
+                        <fc:labelObrigatorio para="uf" value="UF:"/>
+                        <p:inputText id="uf"
+                                     value="#{estadoControlador.selecionado.uf}"                                     
+                                     title="Digite a UF do estado."/>
+                    </h:panelGrid>
+                </p:panel>
+
+                <fc:rodapePadrao controlador="#{estadoControlador}" id="rodapePadrao"/>
+            </h:form>    
+        </ui:define>
+    </ui:composition>
+</html>
+

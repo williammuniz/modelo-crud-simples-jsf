@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+
+        <cc:attribute name="id" required="true"/>
+        <cc:attribute name="controlador" required="true"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <h:form id="FormularioTabela">
+
+            <p:panel header="Pesquisa">
+                <h:panelGrid columns="2">
+                    <c:forEach items="#{cc.attrs.controlador.camposPesquisaveis}" var="campo">
+                        <h:outputText value="#{cc.attrs.controlador.obterLabelCampo(campo)}" />
+                        <p:inputText value="#{cc.attrs.controlador.atributosPesquisaveis[campo]}"/>
+                    </c:forEach>                       
+                </h:panelGrid>
+                <p:commandButton value="Pesquisar" icon="ui-icon-search"
+                                 update="tabelaPadrao"
+                                 actionListener="#{cc.attrs.controlador.pesquisar()}"/>
+            </p:panel>
+            <br/>
+            <p:dataTable value="#{cc.attrs.controlador.lista}"
+                         id="tabelaPadrao"
+                         emptyMessage="Não foram localizados registros"
+                         var="objeto">
+                <f:facet name="header">
+                    <h:outputText value="Lista de  #{cc.attrs.controlador.nomeEntidade}"/>  
+                </f:facet>                                        
+
+                <p:column headerText="Operações" styleClass="colunaOperacoes">
+                    <p:button icon="ui-icon-lupa"
+                              styleClass="icone-20 mrig03 botaoTransparente"
+                              title="Clique para visualizar os detalhes deste registro."
+                              href="../ver/#{objeto.id}/"/>
+                    <p:button icon="ui-icon-lapis"
+                              styleClass="icone-20 mrig03 botaoTransparente"
+                              title="Clique para editar esta cidade."
+                              href="../editar/#{objeto.id}/"/>
+
+                    <p:commandButton icon="ui-icon-minus-circle"
+                                     styleClass="icone-20 botaoTransparente"
+                                     onclick="if (!confirm('Tem certeza que deseja excluir este registro?')){return false;}"
+                                     title="Clique para excluir esta cidade."
+                                     actionListener="#{cidadeControlador.excluir(objeto)}"
+                                     update=":Formulario" />                    
+                </p:column>
+                <c:forEach items="#{cc.attrs.controlador.camposDoSelecionado}" var="campo">
+                    <p:column headerText="#{cc.attrs.controlador.obterLabelCampo(campo)}" styleClass="colunaOperacoes">
+                        <h:outputText value="#{cc.attrs.controlador.obterConteudoCampo(campo, objeto)}" escape="false"/>
+                    </p:column>                        
+                </c:forEach>
+            </p:dataTable> 
+        </h:form>
+    </cc:implementation>
+</html>

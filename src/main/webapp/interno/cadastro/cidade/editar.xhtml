@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:fc="http://java.sun.com/jsf/composite/components"
+      xmlns:f="http://java.sun.com/jsf/core">    
+    <ui:composition template="/interno/template.xhtml">
+        <ui:define name="body">
+            <h:form id="Formulario">                
+                <p:panel>
+                    <f:facet name="header">
+                        <h:outputText value="Nova Cidade" rendered="#{cidadeControlador.operacao eq 'NOVO'}" />
+                        <h:outputText value="Editar Cidade #{cidadeControlador.selecionado}" rendered="#{cidadeControlador.operacao eq 'EDITAR'}" />
+                    </f:facet>
+                    <h:panelGrid columns="2">
+
+                        <fc:labelObrigatorio para="nome" value="Nome:"/>
+                        <p:inputText id="nome"
+                                     value="#{cidadeControlador.selecionado.nome}"                                     
+                                     title="Digite o nome do cidade."/>
+                        <fc:labelObrigatorio para="uf" value="UF:"/>
+                        <p:selectOneMenu id="uf"
+                                     value="#{cidadeControlador.selecionado.estado}"                                     
+                                     title="Digite a UF do cidade."
+                                     converter="#{cidadeControlador.converterEstado}">
+                            <f:selectItems value="#{estadoControlador.selectItensEstado()}"/>
+                        </p:selectOneMenu>
+                    </h:panelGrid>
+                </p:panel>
+
+                <fc:rodapePadrao controlador="#{cidadeControlador}" id="rodapePadrao"/>
+            </h:form>    
+        </ui:define>
+    </ui:composition>
+</html>
+

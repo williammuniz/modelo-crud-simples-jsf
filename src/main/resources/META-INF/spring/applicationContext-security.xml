@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd"
+             xmlns:mvc="http://www.springframework.org/schema/mvc">
+
+    <http pattern="/javax.faces.resource/**" security="none"/>
+    <http pattern="/faces/javax.faces.resource/**" security="none"/>
+    <http pattern="/css/**" security="none"/>
+    <http pattern="/faces/css/**" security="none"/>
+    <http pattern="/img/**" security="none"/>
+    <http pattern="/faces/img/**" security="none"/>
+    <http pattern="/faces/recuperasenha.xhtml" security="none"/>
+    <http pattern="/faces/alterasenha.xhtml" security="none"/>
+    <http pattern="/alterarsenha/" security="none"/>
+    <http pattern="/recuperarsenha/" security="none"/>
+
+    <http pattern="/spring/javax.faces.resource/**" security="none"/>
+    <http pattern="/faces/login.xhtml" security="none"/>
+    <http pattern="/externo/**" security="none"/>
+    <http pattern="/faces/externo/**" security="none"/>
+    <http pattern="/arquivologo" security="none"/>
+
+    <http auto-config="true" authentication-manager-ref="authenticationManager"
+          access-decision-manager-ref="accessDecisionManager">
+        <intercept-url pattern="/interno/**" access="ROLE_USER"/>
+        <intercept-url pattern="/faces/interno/**" access="ROLE_USER"/>
+        <form-login login-processing-url="/j_spring_security_check" login-page="/faces/login.xhtml"
+                    authentication-failure-url="/faces/login.xhtml?login_error"/>
+        <logout logout-url="/logout" logout-success-url="/faces/login.xhtml"/>
+    </http>
+
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider ref="usuarioSistemaAuthenticationProvider"/>
+    </authentication-manager>
+
+    <beans:bean id="usuarioSistemaAuthenticationProvider"
+                class="br.com.exemplo.seguranca.UsuarioSistemaAuthenticationProvider"/>
+
+    <beans:bean id="accessDecisionManager" class="org.springframework.security.access.vote.UnanimousBased">
+        <beans:property name="decisionVoters">
+            <beans:list>
+                <beans:bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+                <beans:bean class="org.springframework.security.access.vote.RoleVoter"/>
+                <beans:bean class="br.com.exemplo.seguranca.UsuarioSistemaAutorizadoVoter"/>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+</beans:beans>

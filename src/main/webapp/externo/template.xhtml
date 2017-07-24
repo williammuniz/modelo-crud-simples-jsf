@@ -1,0 +1,136 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:an="http://java.sun.com/jsf/composite/components"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html">
+<h:head>
+    <title>Modelo</title>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type'/>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content=""/>
+    <meta name="author" content=""/>
+    <!-- Bootstrap Core CSS -->
+    <link href="#{facesContext.externalContext.requestContextPath}/resources/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="#{facesContext.externalContext.requestContextPath}/resources/css/login.css" rel="stylesheet"/>
+    <!-- Custom CSS -->
+    <link href="#{facesContext.externalContext.requestContextPath}/resources/css/4-col-portfolio.css" rel="stylesheet"/>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</h:head>
+
+
+<h:body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="margin-bottom: 50px">
+    <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#{facesContext.externalContext.requestContextPath}/">Exemplo</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#">Sobre</a>
+                </li>
+                <li>
+                    <a href="#">Eventos</a>
+                </li>
+                <li>
+                    <a href="#">Contato</a>
+                </li>
+                <li>
+                    <a href="#{facesContext.externalContext.requestContextPath}/interno/home/">Interno</a>
+                </li>
+            </ul>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+
+<!-- Page Content -->
+<div class="container">
+
+    <!-- Page Heading -->
+
+    <!-- /.row -->
+    <div id="conteudo">
+        <ui:insert name="body"/>
+    </div>
+
+
+    <hr/>
+
+
+</div>
+<p:dialog widgetVar="mensagensDialog"
+          id="idMesagensDialog"
+          modal="true"
+          showHeader="false"
+          dynamic="true"
+          position="center"
+          style="position:fixed !important;"
+          closable="false"
+          resizable="false"
+          visible="#{sistemaControlador.mensagens.size() > 0}"
+          draggable="false">
+    <p:ajax event="close" update="@this" listener="#{sistemaControlador.limparTodasMensagens()}"
+            immediate="true"/>
+    <h:form id="formulario-tabela-mensagens">
+        <div class="div-info-tabela"
+             style="overflow-y: auto; overflow-x: hidden; max-height: 400px !important;">
+            <p:hotkey bind="esc" update="@this"
+                      actionListener="#{sistemaControlador.limparTodasMensagens()}" immediate="true"/>
+            <p:messages/>
+            <h:dataTable value="#{sistemaControlador.mensagens}"
+                         style="width: 100%"
+                         var="fMess">
+                <h:column>
+                    <div class="alert alert-#{sistemaControlador.recuperarClasseGravidadeMensagem(fMess.mensagem)}">
+                        <h:outputText value="#{fMess.mensagem.summary}"
+                                      escape="false"
+                                      rendered="#{fMess.mensagem.detail ne fMess.mensagem.summary}"
+                                      class="negrito"/>
+                        <h:outputText value=" - "
+                                      escape="false"
+                                      rendered="#{fMess.mensagem.detail ne fMess.mensagem.summary}"/>
+                        <h:outputText value="#{fMess.mensagem.detail}"
+                                      escape="false"/>
+                    </div>
+                </h:column>
+            </h:dataTable>
+        </div>
+        <div style="text-align: center">
+            <p:commandButton value="Continuar" actionListener="#{sistemaControlador.limparTodasMensagens()}"
+                             update=":idMesagensDialog" immediate="true" styleClass="bnt"/>
+        </div>
+    </h:form>
+</p:dialog>
+</h:body>
+</f:view>
+
+<!-- jQuery Version 1.11.0 -->
+<script src="#{facesContext.externalContext.requestContextPath}/resources/js/jquery-1.11.0.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="#{facesContext.externalContext.requestContextPath}/resources/js/bootstrap.min.js"></script>
+</html>

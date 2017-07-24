@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fc="http://java.sun.com/jsf/composite/components"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">    
+    <ui:composition template="/interno/template.xhtml">
+        <ui:define name="body">
+            <h:form id="Formulario">
+                <p:button value="Novo Estado"
+                          href="/cadastro/estado/novo/"
+                          icon="ui-icon-plus-circle"
+                          styleClass="mtop10 mrig05"
+                          title="Clique para adicionar uma nova estado." >
+                      <p:button value="Home"
+                      href="/home"
+                      styleClass="mtop10"
+                      icon="ui-icon-house"
+                      title="Clique para voltar para a tela inicial." /> 
+                </p:button>  
+            </h:form>
+          
+            <fc:tabelaPadrao id="tabela" controlador="#{estadoControlador}"/>
+
+        </ui:define>
+    </ui:composition>
+</html>
+
